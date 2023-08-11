@@ -213,5 +213,3 @@ Prototypes for functions written in this project:
   * [102-python.c](./102-python.c): C function that prints basic information about Python
 
   string objects.
-
-

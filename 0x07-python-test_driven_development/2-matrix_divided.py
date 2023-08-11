@@ -1,157 +1,67 @@
-# The ``2-matrix_divided`` module
-============================================
-How to use 2-matrix_divided.py
-============================================
 
-This library has one function called ``matrix_divided()``
+#!/usr/bin/python3
 
-``matrix_divided()`` returns a new matrix after a given matrix has been
-divided by a number ``div``:
+# 2-matrix_divided.py
 
-Importing the function matrix_divided.
-    >>> matrix_divided = __import__('2-matrix_divided').matrix_divided
+"""Defines a matrix division function."""
 
-Dividing by a positive or negative integer.
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, 5)
-    [[0.2, 0.4, 0.6], [0.8, 1.0, 1.2]]
 
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, -5)
-    [[-0.2, -0.4, -0.6], [-0.8, -1.0, -1.2]]
 
-    >>> matrix = [[1.1, 2, -3.3], [4, 5.5, -6]]
-    >>> matrix_divided(matrix, 5)
-    [[0.22, 0.4, -0.66], [0.8, 1.1, -1.2]]
+def matrix_divided(matrix, div):
 
-    >>> matrix = [[1, 2.2, -3.3], [4.4, 5.5, -6]]
-    >>> matrix_divided(matrix, -5)
-    [[-0.2, -0.44, 0.66], [-0.88, -1.1, 1.2]]
+    """Divide all elements of a matrix.
 
-Dividing by a positive or negative float.
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, 2.2)
-    [[0.45, 0.91, 1.36], [1.82, 2.27, 2.73]]
 
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, -2.2)
-    [[-0.45, -0.91, -1.36], [-1.82, -2.27, -2.73]]
+    Args:
 
-    >>> matrix = [[1.1, 2, -3.3], [4, 5.5, -6]]
-    >>> matrix_divided(matrix, 5.5)
-    [[0.2, 0.36, -0.6], [0.73, 1.0, -1.09]]
+        matrix (list): A list of lists of ints or floats.
 
-Dividing by 1
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, 1)
-    [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
+        div (int/float): The divisor.
 
-Dividing by a boolean
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, True)
-    [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
+    Raises:
 
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, False)
-    Traceback (most recent call last):
-        ...
-    ZeroDivisionError: division by zero
+        TypeError: If the matrix contains non-numbers.
 
-Dividing by a string.
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, "1")
-    Traceback (most recent call last):
-        ...
-    TypeError: div must be a number
+        TypeError: If the matrix contains rows of different sizes.
 
-Dividing by None.
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, None)
-    Traceback (most recent call last):
-        ...
-    TypeError: div must be a number
+        TypeError: If div is not an int or float.
 
-Dividing by a various types.
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, [1, 2])
-    Traceback (most recent call last):
-        ...
-    TypeError: div must be a number
+        ZeroDivisionError: If div is 0.
 
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, {1})
-    Traceback (most recent call last):
-        ...
-    TypeError: div must be a number
+    Returns:
 
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, ())
-    Traceback (most recent call last):
-        ...
-    TypeError: div must be a number
+        A new matrix representing the result of the division.
 
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, (1))
-    [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
+    """
 
-Dividing None by None.
-    >>> matrix = None
-    >>> matrix_divided(matrix, None)
-    Traceback (most recent call last):
-        ...
-    TypeError: matrix must be a matrix (list of lists) of integers/floats
+    if (not isinstance(matrix, list) or matrix == [] or
 
-Passing an empty matrix.
-    >>> matrix = []
-    >>> matrix_divided(matrix, 10)
-    Traceback (most recent call last):
-    	...
-    TypeError: matrix must be a matrix (list of lists) of integers/floats
+            not all(isinstance(row, list) for row in matrix) or
 
-Passing a string as a matrix.
-    >>> matrix = "chris brown"
-    >>> matrix_divided(matrix, 10)
-    Traceback (most recent call last):
-    	...
-    TypeError: matrix must be a matrix (list of lists) of integers/floats
+            not all((isinstance(ele, int) or isinstance(ele, float))
 
-Passing a tuple as a matrix.
-    >>> matrix = ([1, 2, 3], [1, 2, 3])
-    >>> matrix_divided(matrix, 10)
-    Traceback (most recent call last):
-    	...
-    TypeError: matrix must be a matrix (list of lists) of integers/floats
+                    for ele in [num for row in matrix for num in row])):
 
-Dividing a matrix where rows are unequal in size.
-    >>> matrix = [[2, 34], [7, 9.8, -76, 1], [-77]]
-    >>> matrix_divided(matrix, 3)
-    Traceback (most recent call last):
-        ...
-    TypeError: Each row of the matrix must have the same size
+        raise TypeError("matrix must be a matrix (list of lists) of "
 
-Dividing a matrix where some of its elements are not floats or integers.
-    >>> matrix = [[1, "2", 3], [{4}, "chris_breezy", (6)]]
-    >>> matrix_divided(matrix, 10)
-    Traceback (most recent call last):
-    	...
-    TypeError: matrix must be a matrix (list of lists) of integers/floats
+                        "integers/floats")
 
-Passing more than two arguments to matrix_divided().
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix, 10, 11) #doctest: +ELLIPSIS
-    Traceback (most recent call last):
-		...
-    TypeError: matrix_divided() takes 2 positional arguments but ...
 
-Passing no arguments to matrix_divided().
-    >>> matrix_divided()
-    Traceback (most recent call last):
-        ...
-    TypeError: matrix_divided() missing 2 required positional arguments: 'matrix' and 'div'
+    if not all(len(row) == len(matrix[0]) for row in matrix):
 
-Passing one argument to matrix_divided().
-    >>> matrix = [[1, 2, 3], [4, 5, 6]]
-    >>> matrix_divided(matrix)
-    Traceback (most recent call last):
-	    ...
-    TypeError: matrix_divided() missing 1 required positional argument: 'div'
+        raise TypeError("Each row of the matrix must have the same size")
+
+
+    if not isinstance(div, int) and not isinstance(div, float):
+
+        raise TypeError("div must be a number")
+
+
+    if div == 0:
+
+        raise ZeroDivisionError("division by zero")
+
+
+    return ([list(map(lambda x: round(x / div, 2), row)) for row in matrix])
+
+
