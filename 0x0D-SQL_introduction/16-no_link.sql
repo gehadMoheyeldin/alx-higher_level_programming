@@ -1,3 +1,6 @@
--- Select count and grouping
--- Execute: cat 15-groups.sql | mysql -hlocalhost -uroot -p hbtn_0c_0
-SELECT score, COUNT(score) AS number FROM second_table GROUP BY score ORDER BY score DESC;
+-- Lists all records of the table second_table having a name value.
+-- Records are ordered by descending score.
+SELECT `score`, `name`
+FROM `second_table`
+WHERE `name` != ""
+ORDER BY `score` DESC
